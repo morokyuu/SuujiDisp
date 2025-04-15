@@ -1,0 +1,4 @@
+/.python-version
+sample/
+*__pycache__*
+.python-version
