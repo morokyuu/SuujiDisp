@@ -1,33 +1,48 @@
 
-class Obj:
+class Tile:
     def __init__(self,value):
         self._value = value
 
     def __str__(self):
         return f'<{self._value}>'
         
+class Tens(Tile):
+    def __init__(self):
+        super().__init__(10)
+
+class Ones(Tile):
+    def __init__(self):
+        super().__init__(1)
 
 
 class Basket:
     def __init__(self):
-        self.bin1 = []
-        self.bin10 = []
+        self.value = 0
+        self.prev_value = 0
 
-    def add(self,amount):
-        b10 = amount // 10
-        b1 = amount % 10
-        print(f'{b10}, {b1}')
+    def set_value(self):
+        try:
+            self.value = int(input())
+        except ValueError:
+            self.value = 0
 
-        self.bin10 += [Obj(10)] * b10
+        diff = self.value - self.prev_value
+        print(f'{self.value} - {self.prev_value} = {diff}')
+        self.prev_value = self.value
 
-    @amount.param
-    def amount(self):
-
-    def __str__(self):
-        st = [b for b in self.bin10]
-        return f'{st}'
+#        b10 = amount // 10
+#        b1 = amount % 10
+#        print(f'{b10}, {b1}')
 
 if __name__ == '__main__':
+    tens = Tens()
+    print(tens)
+
     bsk = Basket()
-    bsk.add(54)
-    print(bsk)
+    while True:
+        bsk.set_value()
+
+
+#    bsk = Basket()
+#    bsk.add(54)
+#    print(bsk)
