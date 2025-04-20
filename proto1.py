@@ -28,16 +28,17 @@ class Basket:
         return instance
 
     def put(self,value):
+        self.value = value
         b10 = value // 10
         b1 = value % 10
         self.tens_bin = [Tens()] * b10
         self.ones_bin = [Ones()] * b1
 
     def __str__(self):
-        return f'{Tens()} : {len(self.tens_bin)}\n{Ones()} : {len(self.ones_bin)}'
+        return f'{Tens()} : {len(self.tens_bin)}, {Ones()} : {len(self.ones_bin)}'
 
-    def __add__(self):
-        return self.b10
+    def __add__(self, bsk):
+        return Basket.from_value(bsk.value + self.value)
 
 
 class UI:
@@ -57,13 +58,17 @@ if __name__ == '__main__':
     
     ui = UI()
     bsk = Basket()
+    bsk.put(29)
+    print(bsk)
     
     bsk2 = Basket.from_value(14)
     print(bsk2)
+    
+    print(bsk + bsk2)
 
-    while True:
-        v = ui.input()
-        bsk.put(v)
-        print(bsk)
+    # while True:
+    #     v = ui.input()
+    #     bsk.put(v)
+    #     print(bsk)
 
 
