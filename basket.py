@@ -41,22 +41,15 @@ class Basket:
         return Basket.from_value(bsk.value + self.value)
 
 
-class UI:
-    def __init__(self):
+class Display:
+    def __init__(self, bsk:Basket):
         self.value = 0
-        pass
     
-    def input(self):
-        try:
-            self.value = int(input())
-        except ValueError:
-            self.value = 0
-        return self.value
+
 
 
 if __name__ == '__main__':
     
-    ui = UI()
     bsk = Basket()
     bsk.put(29)
     print(bsk)
