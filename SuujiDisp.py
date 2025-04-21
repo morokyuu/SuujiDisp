@@ -28,24 +28,29 @@ class Container:
     def __init__(self):
         self.TILE_SIZE = 20
         self.value = 0
-#        self.b10 = 0
-#        self.b1 = 0
         self.sprites = []
         self.x = 70
+    
+    def _get_ball(self,x,y):
+        return pyglet.shapes.Circle(x,y,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch)
 
     def _stock(self):
-#        self.b10 = self.value // 10
-#        self.b1 = self.value % 10
+        print(self.value)
+        b10 = self.value // 10
+        b1 = self.value % 10
 
-        self.sprites.append(pyglet.shapes.Circle(self.x,100,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch))
+        for i in range(b10):
+            for j in range(10):
+                self.sprites.append(self._get_ball(70 + j*self.TILE_SIZE, 40 + i*self.TILE_SIZE))
+
+        for j in range(b1):
+            self.sprites.append(pyglet.shapes.Circle(70 + j*self.TILE_SIZE,100,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch))
         self.x += 20
 
     def increment(self):
         self.value += 1
         self._stock()
 
-    def display(self):
-        pass
 
 
 
@@ -63,7 +68,7 @@ def on_mouse_press(x,y,button,modifiers):
 
 def update(dt):
     global cnt
-    cnt.display()
+#    cnt.display()
 #    for tile in tiles:
 #        tile.update(dt)
 #    spawn_tile()
