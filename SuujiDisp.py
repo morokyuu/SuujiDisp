@@ -7,6 +7,7 @@ import random
 
 tiles = []
 
+
 window = pyglet.window.Window(800, 600, "Suuji no gakushu!", resizable=False)
 center_x, center_y = window.width // 2, window.height // 2
 
@@ -18,19 +19,34 @@ class Tile:
     def __init__(self, x, y, s):
         self.TILE_SIZE = 20
         self.pos = np.array([x,y,s])
-        self.sprite = pyglet.shapes.Rectangle(x, y, self.TILE_SIZE * s, self.TILE_SIZE * s, color=(255, 100, 100), batch=batch)
+        self.sprite = pyglet.shapes.Circle(x,y,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch)
     
     def update(self, delta):
         self.pos += delta
 
+class Container:
+    def __init__(self):
+        self.TILE_SIZE = 20
+        self.value = 0
+#        self.b10 = 0
+#        self.b1 = 0
+        self.sprites = []
+        self.x = 70
 
+    def _stock(self):
+#        self.b10 = self.value // 10
+#        self.b1 = self.value % 10
 
-## main
+        self.sprites.append(pyglet.shapes.Circle(self.x,100,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch))
+        self.x += 20
 
-def spawn_tile(dt):
-    x = random.randrange(0,800)
-    y = random.randrange(0,600)
-    tiles.append(Tile(x,y,1))
+    def increment(self):
+        self.value += 1
+        self._stock()
+
+    def display(self):
+        pass
+
 
 
 @window.event
@@ -40,17 +56,25 @@ def on_draw():
 
 @window.event
 def on_mouse_press(x,y,button,modifiers):
-    print(f'{x},{y}')
-    tiles.append(Tile(x,y,1))
+    global cnt
+    cnt.increment()
+    print(f'{x},{y} {cnt.value}')
+#    tiles.append(Tile(x,y,1))
 
 def update(dt):
+    global cnt
+    cnt.display()
 #    for tile in tiles:
 #        tile.update(dt)
 #    spawn_tile()
+    
     pass
 
 def on_close():
     print("finished")
+
+
+cnt = Container()
 
 pyglet.clock.schedule_interval(update, 1/10.0)
 #pyglet.clock.schedule_interval(spawn_tile, 1/2.0)
