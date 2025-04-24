@@ -21,6 +21,8 @@ class Container:
 
         self.b1_pos = (50, 50)
         self.b10_pos = (50, 100)
+        self.b1_cpos = (0,0)
+        self.b10_cpos = (0,0)
 
     def inc(self):
         print(f"value={self.value}")
@@ -39,8 +41,8 @@ class Container:
             self.b10_pos = (x + 40, y)
         else:
             x,y = self.b1_pos
-            self.b1.append((x,y))
-            self.b1_pos = (x + 40, y)
+            j = self.value % 10
+            self.b1.append((x+j*40,y))
 
     def display(self):
         for pos in self.b1:
