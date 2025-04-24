@@ -37,8 +37,8 @@ class Container:
         if self.value > 0 and (self.value % 10) == 0:
             self.b1.clear()
             x,y = self.b10_pos
-            self.b10.append((x,y))
-            self.b10_pos = (x + 40, y)
+            i = self.value // 10
+            self.b10.append((x,y+i*40))
         else:
             x,y = self.b1_pos
             j = self.value % 10
