@@ -19,8 +19,8 @@ class Container:
         self.b1 = []
         self.b10 = []
 
-        self.b1_pos = (30, 30)
-        self.b10_pos = (30, 100)
+        self.b1_pos = (50, 50)
+        self.b10_pos = (50, 100)
 
     def inc(self):
         print(f"value={self.value}")
@@ -32,9 +32,12 @@ class Container:
 
 
     def _append(self,value):
-#        if self.value > 0 and (self.value % 10) == 0:
-
-        if value == 1:
+        if self.value > 0 and (self.value % 10) == 0:
+            self.b1.clear()
+            x,y = self.b10_pos
+            self.b10.append((x,y))
+            self.b10_pos = (x + 40, y)
+        else:
             x,y = self.b1_pos
             self.b1.append((x,y))
             self.b1_pos = (x + 40, y)
@@ -42,6 +45,8 @@ class Container:
     def display(self):
         for pos in self.b1:
             pg.draw.circle(screen, BLUE, pos, circle_radius)
+        for pos in self.b10:
+            pg.draw.circle(screen, WHITE, pos, circle_radius)
 
 
 cnt = Container()
