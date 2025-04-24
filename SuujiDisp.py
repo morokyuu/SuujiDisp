@@ -23,9 +23,9 @@ class Container:
         self.b10_pos = (50, 100)
 
     def inc(self):
-        print(f"value={self.value}")
         self.value += 1
         self._append(1)
+        print(f"value={self.value}")
 
     def dec(self):
         pass
@@ -40,7 +40,7 @@ class Container:
         else:
             x,y = self.b1_pos
             j = self.value % 10
-            self.b1.append((x+j*50,y))
+            self.b1.append((x+j*40,y))
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
