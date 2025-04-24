@@ -1,89 +1,43 @@
-import pyglet
-from basket import Basket
-import time
-import threading
-import numpy as np
-import random
+import pygame
+import sys
 
-tiles = []
+pygame.init()
 
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Suuji")
 
-window = pyglet.window.Window(800, 600, "Suuji no gakushu!", resizable=False)
-center_x, center_y = window.width // 2, window.height // 2
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
 
-batch = pyglet.graphics.Batch()
+circle_radius = 20
+circles = []
 
+running = True
+while running:
+    screen.fill(WHITE)
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-class Tile:
-    def __init__(self, x, y, s):
-        self.TILE_SIZE = 20
-        self.pos = np.array([x,y,s])
-        self.sprite = pyglet.shapes.Circle(x,y,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch)
-    
-    def update(self, delta):
-        self.pos += delta
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
 
-class Container:
-    def __init__(self):
-        self.TILE_SIZE = 20
-        self.value = 0
-        self.sprites = []
-        self.x = 70
-    
-    def _get_ball(self,x,y):
-        return pyglet.shapes.Circle(x,y,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                pos = pygame.mouse.get_pos()
+                circles.append(pos)
+            elif event.button == 3:
+                if circles:
+                    circles.pop()
 
-    def _stock(self):
-        print(self.value)
-        b10 = self.value // 10
-        b1 = self.value % 10
+    for pos in circles:
+        pygame.draw.circle(screen, BLUE, pos, circle_radius)
 
-        for i in range(b10):
-            for j in range(10):
-                self.sprites.append(self._get_ball(70 + j*self.TILE_SIZE, 40 + i*self.TILE_SIZE))
+    pygame.display.flip()
 
-        for j in range(b1):
-            self.sprites.append(pyglet.shapes.Circle(70 + j*self.TILE_SIZE,100,radius=self.TILE_SIZE, color=(255, 100, 100), batch=batch))
-        self.x += 20
-
-    def increment(self):
-        self.value += 1
-        self._stock()
-
-
-
-
-@window.event
-def on_draw():
-    window.clear()
-    batch.draw()
-
-@window.event
-def on_mouse_press(x,y,button,modifiers):
-    global cnt
-    cnt.increment()
-    print(f'{x},{y} {cnt.value}')
-#    tiles.append(Tile(x,y,1))
-
-def update(dt):
-    global cnt
-#    cnt.display()
-#    for tile in tiles:
-#        tile.update(dt)
-#    spawn_tile()
-    
-    pass
-
-def on_close():
-    print("finished")
-
-
-cnt = Container()
-
-pyglet.clock.schedule_interval(update, 1/10.0)
-#pyglet.clock.schedule_interval(spawn_tile, 1/2.0)
-pyglet.app.run()
-    
-
+pygame.quit()
+sys.exit()
 
