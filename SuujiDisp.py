@@ -43,10 +43,11 @@ class Container:
             self.b1.append((x+j*50,y))
 
     def display(self):
+        rect_size = (40*10, circle_radius*2)
         for pos in self.b1:
             pg.draw.circle(screen, BLUE, pos, circle_radius)
         for pos in self.b10:
-            pg.draw.circle(screen, WHITE, pos, circle_radius)
+            pg.draw.rect(screen, WHITE, pg.Rect(*pos,*rect_size), circle_radius)
 
 
 cnt = Container()
