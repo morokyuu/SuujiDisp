@@ -12,6 +12,8 @@ BLACK = (0, 0, 0)
 BLUE = (100, 100, 255)
 
 circle_radius = 20
+#font = pg.font.Font('Times New Roman',30)
+font = pg.font.SysFont('Times New Roman',100)
 
 class Container:
     def __init__(self):
@@ -21,6 +23,7 @@ class Container:
 
         self.b1_pos = (50, 50)
         self.b10_pos = (50, 100)
+        self.text = font.render(f"{self.value}",True,WHITE)
 
     def inc(self):
         self.value += 1
@@ -41,6 +44,7 @@ class Container:
             x,y = self.b1_pos
             j = self.value % 10
             self.b1.append((x+j*40,y))
+        self.text = font.render(f"{self.value}",True,WHITE)
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
@@ -48,6 +52,7 @@ class Container:
             pg.draw.circle(screen, BLUE, pos, circle_radius)
         for pos in self.b10:
             pg.draw.rect(screen, WHITE, pg.Rect(*pos,*rect_size), circle_radius)
+        screen.blit(self.text, (500,200))
 
 
 cnt = Container()
