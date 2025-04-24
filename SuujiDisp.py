@@ -8,14 +8,35 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Suuji")
 
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 
 circle_radius = 20
-circles = []
+
+class Container:
+    def __init__(self):
+        self.value = 0
+        self.circles = []
+
+    def inc(self):
+        self.value += value
+        b1 = self.value % 10
+        b10 = self.value // 10
+
+        for pos in circles:
+            pygame.draw.circle(screen, BLUE, pos, circle_radius)
+
+    def dec(self):
+        pass
+
+
+    def display(self):
+        pygame.draw.circle(screen, BLUE, pos, circle_radius)
+
 
 running = True
 while running:
-    screen.fill(WHITE)
+    screen.fill(BLACK)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -27,14 +48,9 @@ while running:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                pos = pygame.mouse.get_pos()
-                circles.append(pos)
+                cnt.inc()
             elif event.button == 3:
-                if circles:
-                    circles.pop()
-
-    for pos in circles:
-        pygame.draw.circle(screen, BLUE, pos, circle_radius)
+                cnt.dec()
 
     pygame.display.flip()
 
