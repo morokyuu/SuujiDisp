@@ -7,9 +7,9 @@ WIDTH, HEIGHT = 800, 600
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Suuji")
 
-WHITE = (255, 255, 255)
+WHITE = (200, 200, 200)
 BLACK = (0, 0, 0)
-BLUE = (0, 0, 255)
+BLUE = (100, 100, 255)
 
 circle_radius = 20
 
@@ -21,8 +21,6 @@ class Container:
 
         self.b1_pos = (50, 50)
         self.b10_pos = (50, 100)
-        self.b1_cpos = (0,0)
-        self.b10_cpos = (0,0)
 
     def inc(self):
         print(f"value={self.value}")
@@ -38,11 +36,11 @@ class Container:
             self.b1.clear()
             x,y = self.b10_pos
             i = self.value // 10
-            self.b10.append((x,y+i*40))
+            self.b10.append((x,y+i*50))
         else:
             x,y = self.b1_pos
             j = self.value % 10
-            self.b1.append((x+j*40,y))
+            self.b1.append((x+j*50,y))
 
     def display(self):
         for pos in self.b1:
