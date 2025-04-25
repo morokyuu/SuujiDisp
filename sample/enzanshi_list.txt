@@ -1,0 +1,83 @@
+
+classの演算子オーバーロードを使うと__str__を使ってprintしたときの挙動を定義できるけど、classの入ったリストはどうしたらprintできる
+
+いい質問ですね！
+
+Pythonでは、`__str__()` や `__repr__()` を使って、オブジェクトの文字列表現をカスタマイズできますが、リストの中にカスタムクラスのインスタンスがある場合、その表示にはちょっとした違いがあります。
+
+---
+
+### 基本の違い：
+
+- `print(インスタンス)` → `__str__()` を呼び出す
+- `print([インスタンス])`（リストに入ってる）→ **`__repr__()`** を呼び出す！
+
+---
+
+### つまり：
+
+```python
+class MyClass:
+    def __str__(self):
+        return "str version"
+
+    def __repr__(self):
+        return "repr version"
+
+obj = MyClass()
+print(obj)         # → str version
+print([obj])       # → [repr version]
+```
+
+---
+
+### じゃあリストも「`__str__()`っぽく」表示したいときは？
+
+方法は主に2つあります。
+
+####  方法1：自分でループして `__str__()` を呼び出す
+
+```python
+my_list = [MyClass(), MyClass()]
+print([str(item) for item in my_list])  # → ['str version', 'str version']
+```
+
+あるいはもっと綺麗に：
+
+```python
+print(", ".join(str(item) for item in my_list))
+```
+
+---
+
+####  方法2：リストごと表示するクラスを作る
+
+もしクラスをたくさん持つリストが頻繁に出てくるなら、専用の「表示用ラッパークラス」を用意するのもアリです。
+
+```python
+class MyListPrinter:
+    def __init__(self, lst):
+        self.lst = lst
+
+    def __str__(self):
+        return "[" + ", ".join(str(item) for item in self.lst) + "]"
+
+my_list = [MyClass(), MyClass()]
+print(MyListPrinter(my_list))  # → [str version, str version]
+```
+
+---
+
+### おまけ：`__repr__()` を `__str__()` と同じにすることもできる
+
+```python
+class MyClass:
+    def __str__(self):
+        return "nice!"
+    
+    __repr__ = __str__  # こうすればどちらでも同じ出力になる
+```
+
+---
+
+質問の意図に合わせて、もうちょっとコード例欲しかったり、逆にカスタムクラスの中身によって変えたいときも教えてね！

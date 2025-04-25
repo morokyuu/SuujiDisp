@@ -1,0 +1,51 @@
+なるほどなるほど、「空の状態でも作れるし、最初から値入れて作ることもできるようにしたい」ってことやな。  
+つまり、**コンストラクタのオーバーロードっぽいことをしたい**わけやね！
+
+Pythonでは直接のオーバーロードはできへんけど、**クラスメソッド（ファクトリーメソッド）**を使えばスマートに実現できるで！
+
+---
+
+##  修正例
+
+```python
+class Basket:
+    def __init__(self):
+        self.value = 0
+        self.tens_bin = []
+        self.ones_bin = []
+
+    @classmethod
+    def from_value(cls, value):
+        instance = cls()         # まず空でインスタンス作る
+        instance.put(value)      # 値を入れる処理を呼ぶ
+        return instance          # インスタンスを返す
+
+    def put(self, value):
+        self.value = value
+        b10 = value // 10
+        b1 = value % 10
+        self.tens_bin = [Tens()] * b10
+        self.ones_bin = [Ones()] * b1
+```
+
+---
+
+##  使い方：
+
+```python
+b1 = Basket()             # 空で作成
+b2 = Basket.from_value(23)  # 値を指定して作成
+```
+
+---
+
+##  補足：
+- `from_value()` で `cls()` を使ってるのがポイント！
+  - これが `__init__` を呼んでる。
+- `put()` の中で `value` をちゃんと `self.value` にも保存してる。
+- `Tens` や `Ones` はクラス定義されてる前提やけど、それも必要ならモック用意するで！
+
+---
+
+どう？こんな感じで意図通り？  
+もし `Basket(23)` って書きたい！みたいなスタイルにしたいなら、ちょっと別のアプローチもあるで。それも気になる？

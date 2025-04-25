@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>数をタイルで表示</title>
+  <style>
+    .tile-container { display: flex; gap: 4px; margin-top: 10px; }
+    .tile1 { width: 40px; height: 40px; background: #4dabf7; }
+    .tile10 { width: 400px; height: 40px; background: #f59f00; }
+    button { margin: 5px; }
+  </style>
+</head>
+<body>
+  <h1>数をタイルで数えよう！</h1>
+  <p>現在の数：<span id="count">0</span></p>
+  <button onclick="decrement()"></button>
+  <button onclick="increment()">＋</button>
+
+  <div class="tile-container" id="tiles"></div>
+
+  <script>
+    let count = 0;
+
+    function renderTiles() {
+      document.getElementById('count').innerText = count;
+      const tileContainer = document.getElementById('tiles');
+      tileContainer.innerHTML = '';
+
+      const tens = Math.floor(count / 10);
+      const ones = count % 10;
+
+      for (let i = 0; i < tens; i++) {
+        const tile10 = document.createElement('div');
+        tile10.className = 'tile10';
+        tileContainer.appendChild(tile10);
+      }
+
+      for (let i = 0; i < ones; i++) {
+        const tile1 = document.createElement('div');
+        tile1.className = 'tile1';
+        tileContainer.appendChild(tile1);
+      }
+    }
+
+    function increment() {
+      count++;
+      renderTiles();
+    }
+
+    function decrement() {
+      if (count > 0) {
+        count--;
+        renderTiles();
+      }
+    }
+
+    renderTiles(); // 初期表示
+  </script>
+</body>
+</html>
