@@ -23,25 +23,28 @@ def Vec2Int(vec):
 class Container:
     def __init__(self):
         self.value = 0
-        self.b1 = []
-        self.b10 = []
+        self.b1 = 0
+        self.b10 = 0
 
-        self.b1_pos = (50, 50)
-        self.b10_pos = (50, 40)
+        self.b1_pos = (70, 50)
+        self.b10_pos = (50, 80)
         self.text = font.render(f"{self.value}",True,WHITE)
 
     def inc(self):
         self.value += 1
-        self._append(1)
+        self.b1 = self.value % 10
+        self.b10 = self.value // 10
         print(f"value={self.value}")
         self.text = font.render(f"{self.value}",True,WHITE)
+
 
     def dec(self):
         self.value -= 1
         if self.value < 0:
             self.value = 0
             return
-        self._remove(1)
+        self.b1 = self.value % 10
+        self.b10 = self.value // 10
         print(f"value={self.value}")
         self.text = font.render(f"{self.value}",True,WHITE)
 
@@ -72,12 +75,17 @@ class Container:
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
-        for pos in self.b1:
+
+        x,y = self.b1_pos
+        for j in range(self.b1):
+            pos = (x+j*40, y)
             pg.draw.circle(screen, BLUE, pos, circle_radius)
-        for pos in self.b10:
+
+        x,y = self.b10_pos
+        for i in range(self.b10):
+            pos = (x,y+i*50)
             pg.draw.rect(screen, GRAY, pg.Rect(*pos,*rect_size), circle_radius)
         screen.blit(self.text, (500,200))
-
 
 cnt = Container()
 running = True
