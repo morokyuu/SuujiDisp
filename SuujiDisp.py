@@ -1,5 +1,6 @@
 import pygame as pg
 import sys
+import numpy as np
 
 pg.init()
 
@@ -16,6 +17,9 @@ circle_radius = 20
 #font = pg.font.Font('Times New Roman',30)
 font = pg.font.SysFont('Times New Roman',100)
 
+def Vec2Int(vec):
+    return int(vec[0]),int(vec[1])
+
 class Container:
     def __init__(self):
         self.value = 0
@@ -30,10 +34,16 @@ class Container:
         self.value += 1
         self._append(1)
         print(f"value={self.value}")
+        self.text = font.render(f"{self.value}",True,WHITE)
 
     def dec(self):
-        pass
-
+        self.value -= 1
+        if self.value < 0:
+            self.value = 0
+            return
+        self._remove(1)
+        print(f"value={self.value}")
+        self.text = font.render(f"{self.value}",True,WHITE)
 
     def _append(self,value):
         if self.value > 0 and (self.value % 10) == 0:
@@ -45,7 +55,20 @@ class Container:
             x,y = self.b1_pos
             j = self.value % 10
             self.b1.append((x+j*40,y))
-        self.text = font.render(f"{self.value}",True,WHITE)
+
+    def _remove(self,value):
+        d1 = self.value % 10
+        d10 = self.value // 10
+        print(f'{d1},{d10}')
+        x,y = self.b1_pos
+
+        ## borrow
+        if d1 == 9:
+            self.b10.pop()
+            for j in range(9):
+                self.b1.append((x+j*40,y))
+        else:
+            self.b1.pop()
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
