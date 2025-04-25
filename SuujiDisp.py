@@ -7,7 +7,8 @@ WIDTH, HEIGHT = 800, 600
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Suuji")
 
-WHITE = (200, 200, 200)
+WHITE = (255, 255, 255)
+GRAY = (170, 170, 170)
 BLACK = (0, 0, 0)
 BLUE = (100, 100, 255)
 
@@ -22,7 +23,7 @@ class Container:
         self.b10 = []
 
         self.b1_pos = (50, 50)
-        self.b10_pos = (50, 100)
+        self.b10_pos = (50, 40)
         self.text = font.render(f"{self.value}",True,WHITE)
 
     def inc(self):
@@ -51,7 +52,7 @@ class Container:
         for pos in self.b1:
             pg.draw.circle(screen, BLUE, pos, circle_radius)
         for pos in self.b10:
-            pg.draw.rect(screen, WHITE, pg.Rect(*pos,*rect_size), circle_radius)
+            pg.draw.rect(screen, GRAY, pg.Rect(*pos,*rect_size), circle_radius)
         screen.blit(self.text, (500,200))
 
 
