@@ -24,6 +24,13 @@ def drawCircle(ax, x, y, r, color='black'):
 def drawLine(ax,x0,y0,x1,y1,color='blue'):
     ax.plot(np.array([x0,x1]),np.array([y0,y1]),color=color)
 
+def drawBox(ax,w,h, x0=0, y0=0,color='brown'):
+    x = [x0, x0 + w, x0 + w, x0, x0]
+    y = [y0, y0, y0 + h, y0 + h, y0]
+    ax.plot(x,y,color=color)
+    #ax.plot(np.array([x0,x1]),np.array([y0,y1]),color=color)
+    
+
 def drawPolyline(ax,poly,color='blue'):
     poly = poly.T
     poly = np.vstack((poly,poly[0,:]))
@@ -46,10 +53,8 @@ class BaseCord:
         #self.cx = np.array([[1,0,1]]).transpose()
         
     def put(self,value):
-        self.cx = np.arange(0, value*self.CONT_PITCH, self.CONT_PITCH)
-        self.disp_width = self.cx[1]
-        print(self.disp_width)
-
+        pass
+    
 bc = BaseCord()
 
 fig, ax = plt.subplots()
@@ -59,7 +64,9 @@ plot_vector(ax, bc.nx)
 plot_vector(ax, bc.ny, color='b')
 
 #disp area
-bc.put(2)
+drawBox(ax, 2, 1, -1,-0.5)
+
+#bc.put(2)
 
 
 PLOT_RANGE = 5
