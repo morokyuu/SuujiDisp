@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 def rotZ(th):
     return np.array([
@@ -17,6 +18,19 @@ def tr(x,y):
         [          0,          0, 1.0]
         ])
 
+def drawCircle(ax, x, y, r, color='black'):
+    ax.add_patch(patches.Circle((x,y), radius=r, fill=False, color=color))
+        
+def drawLine(ax,x0,y0,x1,y1,color='blue'):
+    ax.plot(np.array([x0,x1]),np.array([y0,y1]),color=color)
+
+def drawPolyline(ax,poly,color='blue'):
+    poly = poly.T
+    poly = np.vstack((poly,poly[0,:]))
+    for i in range(poly.shape[0]-1):
+        drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
+
+
 
 def plot_vector(ax, vec, color='r'):
     ax.quiver(0, 0, vec[0, 0], vec[1, 0], angles='xy', scale_units='xy', scale=1, color=color)
@@ -25,15 +39,28 @@ class BaseCord:
     def __init__(self):
         self.nx = np.array([[1,0,1]]).transpose()
         self.ny = np.array([[0,1,1]]).transpose()
+        self.cont_size = 1.7
+        self.CONT_PITCH = self.cont_size * 1.3
+        self.disp_width = 2.0
         
+        #self.cx = np.array([[1,0,1]]).transpose()
+        
+    def put(self,value):
+        self.cx = np.arange(0, value*self.CONT_PITCH, self.CONT_PITCH)
+        self.disp_width = self.cx[1]
+        print(self.disp_width)
 
 bc = BaseCord()
 
 fig, ax = plt.subplots()
 
-
+# unit vector
 plot_vector(ax, bc.nx)
 plot_vector(ax, bc.ny, color='b')
+
+#disp area
+bc.put(2)
+
 
 PLOT_RANGE = 5
 ax.set_aspect('equal', adjustable='box')
