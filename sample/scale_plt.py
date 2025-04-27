@@ -28,7 +28,6 @@ def drawBox(ax,w,h, x0=0, y0=0,color='brown'):
     x = [x0, x0 + w, x0 + w, x0, x0]
     y = [y0, y0, y0 + h, y0 + h, y0]
     ax.plot(x,y,color=color)
-    #ax.plot(np.array([x0,x1]),np.array([y0,y1]),color=color)
     
 
 def drawPolyline(ax,poly,color='blue'):
@@ -44,29 +43,28 @@ def plot_vector(ax, vec, color='r'):
 
 class BaseCord:
     def __init__(self):
-        self.nx = np.array([[1,0,1]]).transpose()
-        self.ny = np.array([[0,1,1]]).transpose()
+        self.n = np.array([[1,0,1]]).transpose()
         self.cont_size = 1.7
         self.CONT_PITCH = self.cont_size * 1.3
-        self.disp_width = 2.0
+        self.disp_width = 0
+        self.disp_height = 0
         
         #self.cx = np.array([[1,0,1]]).transpose()
         
     def put(self,value):
-        pass
+        self.disp_width = value
     
 bc = BaseCord()
 
 fig, ax = plt.subplots()
 
 # unit vector
-plot_vector(ax, bc.nx)
-plot_vector(ax, bc.ny, color='b')
+plot_vector(ax, bc.n)
 
 #disp area
-drawBox(ax, 2, 1, -1,-0.5)
+drawBox(ax, bc.disp_width, bc.disp_height, -bc.disp_width/2.0,-bc.disp_height/2.0)
 
-#bc.put(2)
+bc.put(1.5)
 
 
 PLOT_RANGE = 5
