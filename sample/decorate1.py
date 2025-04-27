@@ -22,19 +22,22 @@ MyClass.class_hello()
 ## basic
 d1 = 0
 d10 = 0
+a = 5 
 
 def refine(func):
     def wrapper(value):
-        print(value)
-        a = func(value)
+        func(value)
         print(a)
+
+        global d1,d10
+        d1 = a % 10
+        d10 = a // 10
+        print(f'{d10},{d1}')
     return wrapper ## this is essential
 
 @refine
 def setv(value):
-    global d1,d10
-    d1 = value % 10
-    d10 = value // 10
-    return d10,d1
+    global a
+    a += value
 
 setv(23)
