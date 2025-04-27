@@ -14,7 +14,6 @@ BLACK = (0, 0, 0)
 BLUE = (100, 100, 255)
 
 circle_radius = 20
-#font = pg.font.Font('Times New Roman',30)
 font = pg.font.SysFont('Times New Roman',100)
 
 def Vec2Int(vec):
@@ -30,23 +29,20 @@ class Container:
         self.b10_pos = (50, 80)
         self.text = font.render(f"{self.value}",True,WHITE)
 
+    def _keta(self,value):
+        self.b1 = value % 10
+        self.b10 = value // 10
+
     def inc(self):
         self.value += 1
-        self.b1 = self.value % 10
-        self.b10 = self.value // 10
-        print(f"value={self.value}")
-        self.text = font.render(f"{self.value}",True,WHITE)
-
+        self._keta(self.value)
 
     def dec(self):
         self.value -= 1
         if self.value < 0:
             self.value = 0
             return
-        self.b1 = self.value % 10
-        self.b10 = self.value // 10
-        print(f"value={self.value}")
-        self.text = font.render(f"{self.value}",True,WHITE)
+        self._keta(self.value)
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
@@ -64,6 +60,8 @@ class Container:
             for j in range(10):
                 pos = (x+circle_radius+j*40, y+circle_radius+i*50)
                 pg.draw.circle(screen, BLUE, pos, circle_radius)
+
+        self.text = font.render(f"{self.value}",True,WHITE)
         screen.blit(self.text, (500,200))
 
 cnt = Container()
