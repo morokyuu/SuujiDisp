@@ -2,12 +2,6 @@ import pygame as pg
 import sys
 import numpy as np
 
-pg.init()
-
-WIDTH, HEIGHT = 800, 600
-#screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
-screen = pg.display.set_mode((WIDTH, HEIGHT))
-pg.display.set_caption("Suuji")
 
 WHITE = (255, 255, 255)
 GRAY = (170, 170, 170)
@@ -15,7 +9,6 @@ BLACK = (0, 0, 0)
 BLUE = (100, 100, 255)
 
 circle_radius = 20
-font = pg.font.SysFont('Times New Roman',100)
 
 def Vec2Int(vec):
     return int(vec[0]),int(vec[1])
@@ -28,7 +21,8 @@ class Container:
 
         self.b1_pos = (70, 50)
         self.b10_pos = (50, 80)
-        self.text = font.render(f"{self.value}",True,WHITE)
+        self.font = pg.font.SysFont('Times New Roman',100)
+        self.text = self.font.render(f"{self.value}",True,WHITE)
 
     def _keta(self,value):
         self.b1 = value % 10
@@ -62,31 +56,44 @@ class Container:
                 pos = (x+circle_radius+j*40, y+circle_radius+i*50)
                 pg.draw.circle(screen, BLUE, pos, circle_radius)
 
-        self.text = font.render(f"{self.value}",True,WHITE)
+        self.text = self.font.render(f"{self.value}",True,WHITE)
         screen.blit(self.text, (500,200))
 
-cnt = Container()
-running = True
-while running:
-    screen.fill(BLACK)
+def mainlp():
+    cnt = Container()
+    running = True
+    while running:
+        screen.fill(BLACK)
 
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            running = False
-
-        elif event.type == pg.KEYDOWN:
-            if event.key == pg.K_ESCAPE:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
                 running = False
 
-        elif event.type == pg.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                cnt.inc()
-            elif event.button == 3:
-                cnt.dec()
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    running = False
 
-    cnt.display()
-    pg.display.flip()
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    cnt.inc()
+                elif event.button == 3:
+                    cnt.dec()
 
-pg.quit()
-sys.exit()
+        cnt.display()
+        pg.display.flip()
+
+    pg.quit()
+    sys.exit()
+
+
+if __name__ == '__main__':
+    pg.init()
+
+    WIDTH, HEIGHT = 800, 600
+    #screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
+    screen = pg.display.set_mode((WIDTH, HEIGHT))
+    pg.display.set_caption("Suuji")
+    mainlp()
+
+
 
