@@ -42,30 +42,37 @@ def plot_vector(ax, vec, color='r'):
     ax.quiver(0, 0, vec[0, 0], vec[1, 0], angles='xy', scale_units='xy', scale=1, color=color)
 
 class BaseCord:
-    def __init__(self):
+    def __init__(self, max_disp):
         self.n = np.array([[1,0,1]]).transpose()
-        self.cont_size = 1.7
-        self.CONT_PITCH = self.cont_size * 1.3
+        self.scale = 1.0
+        # self.cont_size = 1.7
+        # self.CONT_PITCH = self.cont_size * 1.3
         self.disp_width = 0
-        self.disp_height = 0
+        self.disp_height = 2
+        self.max_disp = max_disp
         
+        self.testx = 
         #self.cx = np.array([[1,0,1]]).transpose()
         
-    def put(self,value):
-        self.disp_width = value
+    def put(self,width):
+        if width > self.max_disp[0]:
+            self.scale = self.max_disp[0] / width
+            print(self.scale)
     
-bc = BaseCord()
+ww,hh = 6,6
+bc = BaseCord((ww,hh))
 
 fig, ax = plt.subplots()
 
 # unit vector
 plot_vector(ax, bc.n)
 
+#ax.plot([0,bc.disp_width],[0,0])
 #disp area
-drawBox(ax, bc.disp_width, bc.disp_height, -bc.disp_width/2.0,-bc.disp_height/2.0)
 
-bc.put(1.5)
+drawBox(ax, ww, hh, -ww/2.0,-hh/2.0)
 
+bc.put(7)
 
 PLOT_RANGE = 5
 ax.set_aspect('equal', adjustable='box')

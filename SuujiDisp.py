@@ -5,6 +5,7 @@ import numpy as np
 pg.init()
 
 WIDTH, HEIGHT = 800, 600
+#screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Suuji")
 
