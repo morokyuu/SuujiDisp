@@ -18,6 +18,13 @@ def tr(x,y):
         [          0,          0, 1.0]
         ])
 
+def scale(x,y):
+    return np.array([
+        [x,0,0],
+        [0,y,0],
+        [0,0,1]
+        ])
+
 def drawCircle(ax, x, y, r, color='black'):
     ax.add_patch(patches.Circle((x,y), radius=r, fill=False, color=color))
         
@@ -51,13 +58,15 @@ class BaseCord:
         self.disp_height = 2
         self.max_disp = max_disp
         
-        self.testx = 
+        self.testv = np.array([-2,0,1])
         #self.cx = np.array([[1,0,1]]).transpose()
         
     def put(self,width):
         if width > self.max_disp[0]:
             self.scale = self.max_disp[0] / width
             print(self.scale)
+        self.testv = self.testv * scale(self.scale,self.scale)
+        print(self.testv)
     
 ww,hh = 6,6
 bc = BaseCord((ww,hh))
