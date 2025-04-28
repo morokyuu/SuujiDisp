@@ -58,16 +58,23 @@ class BaseCord:
         self.disp_height = 2
         self.max_disp = max_disp
         
-        self.testv = np.array([-2,0,1])
+        self.cont = [] # np.shape()
         #self.cx = np.array([[1,0,1]]).transpose()
         
+    def add(self,cont):
+        self.cont.append(cont)
+    
     def put(self,width):
         if width > self.max_disp[0]:
             self.scale = self.max_disp[0] / width
             print(self.scale)
         self.testv = self.testv * scale(self.scale,self.scale)
         print(self.testv)
-    
+        
+    def disp(self,ax):
+        for c in self.cont:
+            plot_vector(ax, c)
+            
 ww,hh = 6,6
 bc = BaseCord((ww,hh))
 
@@ -81,7 +88,16 @@ plot_vector(ax, bc.n)
 
 drawBox(ax, ww, hh, -ww/2.0,-hh/2.0)
 
-bc.put(7)
+# plot_vector(ax, np.array([[2,2,1]]).transpose())
+bc.add(np.array([[2,2,1]]).transpose())
+bc.add(np.array([[-2,2,1]]).transpose())
+
+# bc.add(np.array([2,2,1]))
+# bc.add(np.array([-2,2,1]))
+
+bc.disp(ax)
+
+#bc.put(7)
 
 PLOT_RANGE = 5
 ax.set_aspect('equal', adjustable='box')
