@@ -64,6 +64,9 @@ class BaseCord:
     def add(self,cont):
         self.cont.append(cont)
     
+#    def mani(self,func):
+#        for c in self
+    
     def put(self,width):
         if width > self.max_disp[0]:
             self.scale = self.max_disp[0] / width
@@ -89,8 +92,14 @@ plot_vector(ax, bc.n)
 drawBox(ax, ww, hh, -ww/2.0,-hh/2.0)
 
 # plot_vector(ax, np.array([[2,2,1]]).transpose())
-bc.add(np.array([[2,2,1]]).transpose())
-bc.add(np.array([[-2,2,1]]).transpose())
+# bc.add(np.array([[2,2,1]]).transpose())
+# bc.add(np.array([[-2,2,1]]).transpose())
+
+bc.add(np.array([[-2, 2],
+                 [-2,-2],
+                 [ 1, 1]
+                 ]))
+#                ]).transpose())
 
 # bc.add(np.array([2,2,1]))
 # bc.add(np.array([-2,2,1]))
