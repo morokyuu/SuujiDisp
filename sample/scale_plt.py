@@ -18,10 +18,10 @@ def tr(x,y):
         [          0,          0, 1.0]
         ])
 
-def scale(x,y):
+def scale(ratio):
     return np.array([
-        [x,0,0],
-        [0,y,0],
+        [ratio,0,0],
+        [0,ratio,0],
         [0,0,1]
         ])
 
@@ -82,8 +82,10 @@ class BaseCord:
         if width > self.max_disp[0]:
             self.scale = self.max_disp[0] / width
             print(self.scale)
-        self.testv = self.testv * scale(self.scale,self.scale)
-        print(self.testv)
+        #self.testv = self.testv * scale(self.scale,self.scale)
+        #print(self.testv)
+        for i,c in enumerate(self.cont):
+            self.cont[i] = scale(self.scale) @ c
         
     def disp(self,ax):
         for c in self.cont:
@@ -98,6 +100,7 @@ class ArrayPlt:
     def _set_one(self):
         v = np.zeros((3,1)); v[2,0] = 1
         self.v = v
+        self.w = 0
 
     def set(self,N):
         if N == 0:
@@ -106,14 +109,10 @@ class ArrayPlt:
             self._set_one()
             return
 
-        halfw = self.pitch*N/2.0
+        self.width = self.pitch*N
+        halfw = self.width/2.0
         x = np.linspace(-halfw,halfw,N)
         self.v = np.vstack([x,np.zeros((1,N)),np.ones((1,N))])
-
-    def get(self):
-        return self.v
-
-
 
 
 ww,hh = 6,6
@@ -140,11 +139,11 @@ bc.add(np.array([[-2, 2],
 
 
 ap = ArrayPlt(0.7)
-ap.set(10)
-print(ap.get())
-bc.add(tr(0,1.5) @ ap.get())
+ap.set(4)
+print(ap.v)
+bc.add(tr(0,1.5) @ ap.v)
 
-#bc.put(7)
+bc.put(ap.width)
 
 bc.disp(ax)
 
