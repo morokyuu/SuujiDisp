@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 def draw_vectors(mat):
     # mat.shape == (3, N)
     if mat.shape[0] != 3:
-        raise ValueError("行列の形は (3, N) にしてください。")
+        raise ValueError("matrix must be (3, N)")
 
     X = np.zeros((1,N))
     Y = np.zeros((1,N))
-    U = mat[0]  # ベクトルの x 成分 (N,)
-    V = mat[1]  # ベクトルの y 成分 (N,)
+    U = mat[0]  # x(N,)
+    V = mat[1]  # y(N,)
 
     plt.quiver(X, Y, U, V, angles='xy', scale_units='xy', scale=1)
     plt.gca().set_aspect('equal')

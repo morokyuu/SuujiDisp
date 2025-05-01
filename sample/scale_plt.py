@@ -48,6 +48,17 @@ def drawPolyline(ax,poly,color='blue'):
 def plot_vector(ax, vec, color='r'):
     ax.quiver(0, 0, vec[0, 0], vec[1, 0], angles='xy', scale_units='xy', scale=1, color=color)
 
+def draw_vectors(ax, mat):
+    if mat.shape[0] != 3:
+        raise ValueError("matrix must be (3, N)")
+    N = mat.shape[1]
+    X = np.zeros((1,N))
+    Y = np.zeros((1,N))
+    U = mat[0]  # x(N,)
+    V = mat[1]  # y(N,)
+    ax.quiver(X, Y, U, V, angles='xy', scale_units='xy', scale=1)
+
+
 class BaseCord:
     def __init__(self, max_disp):
         self.n = np.array([[1,0,1]]).transpose()
@@ -76,7 +87,8 @@ class BaseCord:
         
     def disp(self,ax):
         for c in self.cont:
-            plot_vector(ax, c)
+            draw_vectors(ax,c)
+            #plot_vector(ax, c)
             
 ww,hh = 6,6
 bc = BaseCord((ww,hh))
@@ -99,10 +111,7 @@ bc.add(np.array([[-2, 2],
                  [-2,-2],
                  [ 1, 1]
                  ]))
-#                ]).transpose())
-
-# bc.add(np.array([2,2,1]))
-# bc.add(np.array([-2,2,1]))
+    
 
 bc.disp(ax)
 
