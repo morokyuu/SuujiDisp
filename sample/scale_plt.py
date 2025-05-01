@@ -114,10 +114,6 @@ class ArrayPlt:
         return self.v
 
 
-ap = ArrayPlt(2.0)
-ap.set(3)
-
-print(ap.get())
 
 
 ww,hh = 6,6
@@ -142,9 +138,15 @@ bc.add(np.array([[-2, 2],
                  [ 1, 1]
                  ]))
 
-bc.disp(ax)
+
+ap = ArrayPlt(0.7)
+ap.set(10)
+print(ap.get())
+bc.add(tr(0,1.5) @ ap.get())
 
 #bc.put(7)
+
+bc.disp(ax)
 
 PLOT_RANGE = 5
 ax.set_aspect('equal', adjustable='box')
