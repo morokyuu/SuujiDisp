@@ -89,7 +89,37 @@ class BaseCord:
         for c in self.cont:
             draw_vectors(ax,c)
             #plot_vector(ax, c)
-            
+
+class ArrayPlt:
+    def __init__(self,pitch):
+        self._set_one()
+        self.pitch = pitch
+
+    def _set_one(self):
+        v = np.zeros((3,1)); v[2,0] = 1
+        self.v = v
+
+    def set(self,N):
+        if N == 0:
+            raise "N must not be zero"
+        elif N==1:
+            self._set_one()
+            return
+
+        halfw = self.pitch*N/2.0
+        x = np.linspace(-halfw,halfw,N)
+        self.v = np.vstack([x,np.zeros((1,N)),np.ones((1,N))])
+
+    def get(self):
+        return self.v
+
+
+ap = ArrayPlt(2.0)
+ap.set(3)
+
+print(ap.get())
+
+
 ww,hh = 6,6
 bc = BaseCord((ww,hh))
 
@@ -111,7 +141,6 @@ bc.add(np.array([[-2, 2],
                  [-2,-2],
                  [ 1, 1]
                  ]))
-    
 
 bc.disp(ax)
 
