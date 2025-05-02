@@ -73,9 +73,9 @@ class BaseCord:
     def add(self,cont):
         self.cont.append(cont)
     
-    def _rescale(self,width):
+    def rescale(self,width):
         max_x,max_y = self.max_disp
-        if width > self.max_x:
+        if width > max_x:
             self.scale = max_x / width
             print(self.scale)
         for i,c in enumerate(self.cont):
@@ -145,6 +145,7 @@ ap.N = 10
 print(ap.v)
 bc.add(tr(0,1.5) @ ap.v)
 
+bc.rescale(ap.width)
 #bc.put(ap.width)
 
 bc.disp(ax)
