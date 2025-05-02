@@ -15,7 +15,7 @@ def Vec2Int(vec):
 
 class Container:
     def __init__(self):
-        self.value = 89
+        self.value = 0 
         self.b1 = 0
         self.b10 = 0
         self.b100 = 0
@@ -89,7 +89,7 @@ class Container:
 
         # suuji
         self.text = self.font.render(f"{self.value}",True,WHITE)
-        screen.blit(self.text, (500,170))
+        screen.blit(self.text, (430,170))
 
         # yomigana
         k100,k10,k1 = self._yomigana()
@@ -134,8 +134,8 @@ if __name__ == '__main__':
     pg.init()
 
     WIDTH, HEIGHT = 800, 600
-    #screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
-    screen = pg.display.set_mode((WIDTH, HEIGHT))
+    screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
+    #screen = pg.display.set_mode((WIDTH, HEIGHT))
     pg.display.set_caption("Suuji")
     mainlp()
 
