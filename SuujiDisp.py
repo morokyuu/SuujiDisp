@@ -71,7 +71,7 @@ class Container:
 
         # suuji
         self.text = self.font.render(f"{self.value}",True,WHITE)
-        screen.blit(self.text, (600,200))
+        screen.blit(self.text, (500,170))
 
         # yomigana
         k10,k1 = self._yomigana()
@@ -79,6 +79,9 @@ class Container:
         screen.blit(yomi_1, (650,400))
         yomi_10 = self.yomifont.render(f"{k10}",True,WHITE)
         screen.blit(yomi_10, (350,400))
+        
+#        w,h = self.yomifont.size(f"{k10}")
+#        print(w)
 
 def mainlp():
     cnt = Container()
