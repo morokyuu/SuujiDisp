@@ -34,6 +34,8 @@ class Container:
 
     def inc(self):
         self.value += 1
+        if self.value > 100:
+            self.value = 100
         self._keta(self.value)
 
     def dec(self):
@@ -47,8 +49,7 @@ class Container:
         kk1 = ["ぜろ", "いち", "に", "さん", "し", "ご", "ろく", "しち", "はち", "きゅう"]
         kk10 = ["", "じゅう", "にじゅう", "さんじゅう", "よんじゅう", "ごじゅう", "ろくじゅう", "しちじゅう", "はちじゅう", "きゅうじゅう"]
         kk100 = ["", "ひやく"]
-
-        print(f"{self.b100},{self.b10},{self.b1}")
+        #print(f"{self.b100},{self.b10},{self.b1}")
 
         if self.b100 == 1 and self.b10 == 0 and self.b1 == 0:
             k100,k10,k1 = kk100[1],"",""
@@ -75,6 +76,16 @@ class Container:
             for j in range(10):
                 pos = (x+circle_radius+j*40, y+circle_radius+i*50)
                 pg.draw.circle(screen, BLUE, pos, circle_radius)
+
+        if self.b100:
+            x,y = self.b10_pos
+            for i in range(10):
+                pos = (x,y+i*50)
+                pg.draw.rect(screen, GRAY, pg.Rect(*pos,*rect_size), circle_radius)
+
+                for j in range(10):
+                    pos = (x+circle_radius+j*40, y+circle_radius+i*50)
+                    pg.draw.circle(screen, BLUE, pos, circle_radius)
 
         # suuji
         self.text = self.font.render(f"{self.value}",True,WHITE)
