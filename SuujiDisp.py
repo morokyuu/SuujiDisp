@@ -15,9 +15,10 @@ def Vec2Int(vec):
 
 class Container:
     def __init__(self):
-        self.value = 0
+        self.value = 89
         self.b1 = 0
         self.b10 = 0
+        self.b100 = 0
 
         self.b1_pos = (70, 50)
         self.b10_pos = (50, 80)
@@ -28,7 +29,8 @@ class Container:
 
     def _keta(self,value):
         self.b1 = value % 10
-        self.b10 = value // 10
+        self.b10 = value // 10 % 10
+        self.b100 = value // 100 % 10
 
     def inc(self):
         self.value += 1
@@ -42,15 +44,20 @@ class Container:
         self._keta(self.value)
 
     def _yomigana(self):
-        kk1 = ["ぜろ", "いち", "に", "さん", "し", "ご", "ろく", "しち", "はち", "く"]
+        kk1 = ["ぜろ", "いち", "に", "さん", "し", "ご", "ろく", "しち", "はち", "きゅう"]
         kk10 = ["", "じゅう", "にじゅう", "さんじゅう", "よんじゅう", "ごじゅう", "ろくじゅう", "しちじゅう", "はちじゅう", "きゅうじゅう"]
+        kk100 = ["", "ひやく"]
 
-        if self.b10 > 0 and self.b1 == 0:
-            k10,k1 = kk10[self.b10],""
+        print(f"{self.b100},{self.b10},{self.b1}")
+
+        if self.b100 == 1 and self.b10 == 0 and self.b1 == 0:
+            k100,k10,k1 = kk100[1],"",""
+        elif self.b100 == 0 and self.b10 > 0 and self.b1 == 0:
+            k100,k10,k1 = "",kk10[self.b10],""
         else:
-            k10,k1 = kk10[self.b10],kk1[self.b1]
+            k100,k10,k1 = "",kk10[self.b10],kk1[self.b1]
 
-        return k10,k1
+        return k100,k10,k1
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
@@ -74,11 +81,13 @@ class Container:
         screen.blit(self.text, (500,170))
 
         # yomigana
-        k10,k1 = self._yomigana()
+        k100,k10,k1 = self._yomigana()
         yomi_1 = self.yomifont.render(f"{k1}",True,WHITE)
         screen.blit(yomi_1, (650,400))
         yomi_10 = self.yomifont.render(f"{k10}",True,WHITE)
         screen.blit(yomi_10, (350,400))
+        yomi_100 = self.yomifont.render(f"{k100}",True,WHITE)
+        screen.blit(yomi_100, (280,400))
         
 #        w,h = self.yomifont.size(f"{k10}")
 #        print(w)
