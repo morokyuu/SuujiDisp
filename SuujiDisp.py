@@ -104,6 +104,7 @@ class Container:
 #        print(w)
 
 def mainlp():
+    clock = pg.time.Clock()
     cnt = Container()
     running = True
     while running:
@@ -125,6 +126,7 @@ def mainlp():
 
         cnt.display()
         pg.display.flip()
+        clock.tick(10)
 
     pg.quit()
     sys.exit()
