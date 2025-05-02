@@ -65,8 +65,6 @@ class BaseCord:
         self.scale = 1.0
         # self.cont_size = 1.7
         # self.CONT_PITCH = self.cont_size * 1.3
-        self.disp_width = 0
-        self.disp_height = 2
         self.max_disp = max_disp
         
         self.cont = [] # np.shape()
@@ -75,15 +73,11 @@ class BaseCord:
     def add(self,cont):
         self.cont.append(cont)
     
-#    def mani(self,func):
-#        for c in self
-    
-    def put(self,width):
-        if width > self.max_disp[0]:
-            self.scale = self.max_disp[0] / width
+    def _rescale(self,width):
+        max_x,max_y = self.max_disp
+        if width > self.max_x:
+            self.scale = max_x / width
             print(self.scale)
-        #self.testv = self.testv * scale(self.scale,self.scale)
-        #print(self.testv)
         for i,c in enumerate(self.cont):
             self.cont[i] = scale(self.scale) @ c
         
@@ -94,25 +88,38 @@ class BaseCord:
 
 class ArrayPlt:
     def __init__(self,pitch):
-        self._set_one()
+        self._N = 1
         self.pitch = pitch
+        self._set_one()
 
     def _set_one(self):
         v = np.zeros((3,1)); v[2,0] = 1
         self.v = v
-        self.w = 0
+        self._width = 0
 
-    def set(self,N):
-        if N == 0:
+    def _revise_vec(self):
+        self._width = self.pitch*self._N
+        halfw = self._width/2.0
+        x = np.linspace(-halfw,halfw,self._N)
+        self.v = np.vstack([x,np.zeros((1,self._N)),np.ones((1,self._N))])
+
+    @property
+    def width(self):
+        return self._width
+    
+    @property
+    def N(self):
+        return self._N
+
+    @N.setter
+    def N(self,n):
+        if n == 0:
             raise "N must not be zero"
-        elif N==1:
+        elif n==1:
             self._set_one()
-            return
+        self._N = n
+        self._revise_vec()
 
-        self.width = self.pitch*N
-        halfw = self.width/2.0
-        x = np.linspace(-halfw,halfw,N)
-        self.v = np.vstack([x,np.zeros((1,N)),np.ones((1,N))])
 
 
 ww,hh = 6,6
@@ -123,14 +130,9 @@ fig, ax = plt.subplots()
 # unit vector
 plot_vector(ax, bc.n)
 
-#ax.plot([0,bc.disp_width],[0,0])
-#disp area
 
 drawBox(ax, ww, hh, -ww/2.0,-hh/2.0)
 
-# plot_vector(ax, np.array([[2,2,1]]).transpose())
-# bc.add(np.array([[2,2,1]]).transpose())
-# bc.add(np.array([[-2,2,1]]).transpose())
 
 bc.add(np.array([[-2, 2],
                  [-2,-2],
@@ -139,11 +141,11 @@ bc.add(np.array([[-2, 2],
 
 
 ap = ArrayPlt(0.7)
-ap.set(4)
+ap.N = 10
 print(ap.v)
 bc.add(tr(0,1.5) @ ap.v)
 
-bc.put(ap.width)
+#bc.put(ap.width)
 
 bc.disp(ax)
 
