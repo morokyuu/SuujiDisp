@@ -21,7 +21,9 @@ class Container:
 
         self.b1_pos = (70, 50)
         self.b10_pos = (50, 80)
-        self.font = pg.font.SysFont('Times New Roman',100)
+        #self.font = pg.font.SysFont('Times New Roman',100)
+        self.font = pg.font.Font("C:/Windows/Fonts/meiryo.ttc", 200)
+        self.yomifont = pg.font.Font("C:/Windows/Fonts/meiryo.ttc", 50)
         self.text = self.font.render(f"{self.value}",True,WHITE)
 
     def _keta(self,value):
@@ -38,6 +40,17 @@ class Container:
             self.value = 0
             return
         self._keta(self.value)
+
+    def _yomigana(self):
+        kk1 = ["ぜろ", "いち", "に", "さん", "し", "ご", "ろく", "しち", "はち", "く"]
+        kk10 = ["", "じゅう", "にじゅう", "さんじゅう", "よんじゅう", "ごじゅう", "ろくじゅう", "しちじゅう", "はちじゅう", "きゅうじゅう"]
+
+        if self.b10 > 0 and self.b1 == 0:
+            k10,k1 = kk10[self.b10],""
+        else:
+            k10,k1 = kk10[self.b10],kk1[self.b1]
+
+        return k10,k1
 
     def display(self):
         rect_size = (40*10, circle_radius*2)
@@ -56,8 +69,16 @@ class Container:
                 pos = (x+circle_radius+j*40, y+circle_radius+i*50)
                 pg.draw.circle(screen, BLUE, pos, circle_radius)
 
+        # suuji
         self.text = self.font.render(f"{self.value}",True,WHITE)
-        screen.blit(self.text, (500,200))
+        screen.blit(self.text, (600,200))
+
+        # yomigana
+        k10,k1 = self._yomigana()
+        yomi_1 = self.yomifont.render(f"{k1}",True,WHITE)
+        screen.blit(yomi_1, (650,400))
+        yomi_10 = self.yomifont.render(f"{k10}",True,WHITE)
+        screen.blit(yomi_10, (350,400))
 
 def mainlp():
     cnt = Container()
